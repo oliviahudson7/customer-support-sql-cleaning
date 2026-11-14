@@ -1,31 +1,81 @@
-# Customer Support Ticket Data Cleaning (SQL)
+# Customer Support Data Cleaning | SQL
 
-## Overview
-A beginner-friendly SQL Server portfolio exercise using **synthetic customer-support ticket data**. The goal was to turn inconsistent raw records into a cleaner table suitable for basic reporting. This is a **guided practice project**, not a real company dataset.
+## Project Overview
 
-## Tools and skills
-- **Tools:** SQL Server Management Studio (SSMS), T-SQL
-- **SQL:** `SELECT`, `COUNT`, `GROUP BY`, `HAVING`, `CASE`, `ROW_NUMBER`, CTEs, `DELETE`, `UPDATE`, `TRIM`, `COALESCE`, `AVG`
-- **Skills:** duplicate detection, missing-value handling, text standardization, data validation, simple aggregation
+This is a beginner-friendly, guided SQL data-cleaning project I completed to strengthen my foundational SQL skills and gain more hands-on experience working with datasets.
 
-## Data issues and cleaning process
-1. Inspected **36 raw records** and found two duplicated ticket IDs (`T010`, `T023`).
-2. Copied the raw data into a separate working table to preserve the source.
-3. Removed duplicate ticket rows using `ROW_NUMBER()` partitioned by ticket ID, keeping the earliest record.
-4. Trimmed extra spaces and standardized capitalization in `Channel`, `IssueType`, `Priority`, and `Status`.
-5. Replaced one missing `Channel` and one missing `Priority` value with `Unknown` to retain those records without inventing information.
-6. Ran validation checks to confirm **34 rows, 34 unique ticket IDs, and no NULL values in Channel or Priority**.
+Using a synthetic customer support ticket dataset, I practiced identifying data quality issues, cleaning inconsistent records, and preparing the data for analysis.
 
-## Reporting queries
-- Ticket count by issue type.
-- Average recorded resolution hours by ticket priority (excluding NULL resolution times).
+**Tools Used:** SQL Server Management Studio (SSMS), SQL Server (T-SQL)
 
-## How to reproduce
-1. Open **SQL Server Management Studio** and connect to your SQL Server instance.
-2. Run `customer_support_starter.sql` to create the `SupportTicketPortfolio` database and seed the synthetic raw data.
-3. Run `customer_support_cleaning.sql` to create and clean the working table and produce the validation/reporting outputs.
+**Project Type:** Guided Learning Project
 
-**Note:** The starter script rebuilds the raw table and the cleaning script rebuilds the clean table. They are designed for a practice database, not a production environment. `Closed` and `Resolved` are left as distinct status labels because their business meanings have not been defined.
+## Dataset
 
-## Portfolio context
-This small guided project demonstrates foundational T-SQL data-cleaning techniques and documentation. It is not presented as an independently sourced real-world analysis.
+The dataset contains 36 fictional customer support ticket records, including information about issue types, support channels, ticket priorities, statuses, and resolution times.
+
+The raw dataset intentionally included duplicate records, missing values, and inconsistent text formatting to simulate common data-cleaning problems.
+
+## Data Cleaning Process
+
+### 1. Exploring the Data
+- Used `SELECT`, `COUNT()`, `GROUP BY`, and `HAVING` to explore the dataset.
+- Identified duplicate ticket IDs.
+- Used `CASE WHEN` and `IS NULL` to locate missing values.
+
+### 2. Removing Duplicates
+- Created a separate working table to preserve the original data.
+- Used `ROW_NUMBER()` with a Common Table Expression (CTE) to identify and remove duplicate tickets.
+- Reduced the dataset from 36 records to 34 unique tickets.
+
+### 3. Standardizing Data
+- Used `TRIM()`, `UPPER()`, `LOWER()`, and `SUBSTRING()` to clean inconsistent text formatting.
+- Standardized categorical fields to improve consistency for reporting.
+
+### 4. Handling Missing Values
+- Used `COALESCE()` to replace missing support channel and priority values with "Unknown."
+- Preserved records rather than deleting useful information.
+
+### 5. Validating and Analyzing Data
+- Confirmed that all 34 remaining ticket IDs were unique.
+- Verified that no NULL values remained in the cleaned Channel and Priority fields.
+- Used `GROUP BY`, `COUNT()`, and `AVG()` to explore ticket categories and resolution times.
+
+## Results
+
+| Data Quality Metric | Result |
+|---|---|
+| Original records | 36 |
+| Cleaned records | 34 |
+| Duplicate records removed | 2 |
+| Missing Channel values addressed | 1 |
+| Missing Priority values addressed | 1 |
+| Unique ticket IDs after cleaning | 34 |
+
+## What I Learned
+
+This guided project helped me better understand the data-cleaning process in SQL.
+
+**My key takeaways included:**
+
+- **Exploring before cleaning:** Understanding why data analysts inspect a dataset for quality issues before making changes.
+- **Working with duplicates:** Learning how `ROW_NUMBER()` and CTEs can identify repeated records.
+- **Handling missing data:** Understanding why missing values don't always require deleting an entire record.
+- **Standardizing text:** Practicing SQL string functions to make categorical data consistent.
+- **Validating results:** Learning the importance of checking whether cleaning operations produced the expected results.
+- **Basic analysis:** Using aggregate functions to summarize cleaned data.
+
+## Project Reflection
+
+As I continue developing my data analytics skills, this project helped me become more comfortable reading, executing, and understanding SQL queries.
+
+Although I completed this project with step-by-step guidance, I practiced each cleaning operation in SSMS and reviewed the purpose of the SQL functions used throughout the process.
+
+This project reinforced my understanding of foundational data-cleaning techniques and gave me more experience preparing data for analysis.
+
+## Project Files
+
+- `customer_support_starter.sql` — Creates the synthetic dataset.
+- `customer_support_cleaning.sql` — Contains the SQL cleaning, validation, and analysis queries.
+
+*This project uses synthetic data and was completed as a guided learning exercise.*
